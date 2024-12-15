@@ -1,0 +1,13 @@
+{
+  "name": "skills-test-with-actions",
+  "version": "1.0.0",
+  "description": "A basic CI setup with GitHub Actions",
+  "scripts": {
+    "lint": "remark . --use remark-preset-lint-consistent --frail",
+    "test": "echo \"Run tests here\""
+  },
+  "devDependencies": {
+    "remark-cli": "^10.0.0",
+    "remark-preset-lint-consistent": "^5.0.0"
+  }
+}
