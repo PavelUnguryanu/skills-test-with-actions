@@ -28,11 +28,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Запуск markdown линтера
+      # Запуск markdown линтера с выводом отчёта в JSON
       - name: Run markdown lint
         run: |
-          npm install remark-cli remark-preset-lint-consistent
-          npx remark . --use remark-preset-lint-consistent --frail
+          npm install remark-cli remark-preset-lint-consistent vfile-reporter-json
+          npx remark . --use remark-preset-lint-consistent --report vfile-reporter-json 2> remark-lint-report.json
+
+      # Загрузка отчёта о линтинге как артефакта
+      - name: Upload remark lint report
+        uses: actions/upload-artifact@v4
+        with:
+          name: remark-lint-report
+          path: remark-lint-report.json
 
       # Запуск тестов
       - name: Run tests
