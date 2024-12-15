@@ -7,22 +7,40 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # Шаг для клонирования репозитория
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # Установка Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
 
+      # Установка зависимостей
       - name: Install dependencies
         run: npm install
 
+      # Запуск markdown линтера с выводом отчёта в JSON
+      - name: Run markdown lint
+        run: |
+          npm install remark-cli remark-preset-lint-consistent vfile-reporter-json
+          npx remark . --use remark-preset-lint-consistent --report vfile-reporter-json 2> remark-lint-report.json
+
+      # Загрузка отчёта о линтинге как артефакта
+      - name: Upload remark lint report
+        uses: actions/upload-artifact@v4
+        with:
+          name: remark-lint-report
+          path: remark-lint-report.json
+
+      # Запуск тестов
       - name: Run tests
         run: npm test
