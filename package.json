@@ -1,8 +1,7 @@
 {
   "name": "skills-test-with-actions",
   "version": "1.0.0",
-  "description": "CI testing with GitHub Actions",
-  "main": "index.js",
+  "description": "A basic CI setup with GitHub Actions",
   "scripts": {
     "lint": "remark . --use remark-preset-lint-consistent --frail",
     "test": "echo \"Run tests here\""
